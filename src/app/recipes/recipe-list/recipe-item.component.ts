@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
+import { ROUTER_DIRECTIVES } from "@angular/router";
 
 import { Recipe } from '../recipe';
 
@@ -10,8 +10,6 @@ import { Recipe } from '../recipe';
   directives: [ROUTER_DIRECTIVES]
 })
 export class RecipeItemComponent {
-
   @Input() recipe: Recipe;
   @Input() recipeId: number;
-
 }
