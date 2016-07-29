@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Headers, Http, Response } from '@angular/http';
+
 import { Recipe } from './recipe';
 import { Ingredient } from '../shared';
 
@@ -22,7 +24,7 @@ export class RecipeService {
     ])
   ];
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   getRecipes() {
     return this.recipes;
@@ -34,6 +36,24 @@ export class RecipeService {
 
   deleteRecipe(recipe: Recipe) {
     this.recipes.splice(this.recipes.indexOf(recipe), 1);
+  }
+
+  storeData() {
+    const body = JSON.stringify(this.recipes);
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    return this.http.put('https://recipe-book-2c62a.firebaseio.com/recipes.json', body, {headers: headers});
+  }
+
+  fetchData() {
+    return this.http.get('https://recipe-book-2c62a.firebaseio.com/recipes.json')
+      .map((response: Response) => response.json())
+      .subscribe(
+        (data: Recipe[]) => {
+          this.recipes = data;
+        }
+      );
   }
 
 }
